@@ -1,6 +1,7 @@
-# I'm Nishant Yadav 
+<h1 align="center">I'm Nishant Yadav</h1>
 
 ## 💫 About Me:
+
 🔭 I’m currently working on - Building clean, responsive frontend websites using HTML, CSS, and JavaScript while strengthening my Backend JavaScript.<br>👯 I’m looking to collaborate on - Frontend web projects, portfolio websites, and beginner-friendly open-source projects where I can contribute to UI development and functionality.<br>🌱 I’m currently learning - Advanced JavaScript and modern web development practices <br>
 🛩️ Passionate about lifestyle<br>
 and Adventure : Exploring the world.<br>
