@@ -19,7 +19,7 @@ TOOLS AND LANGUAGES : <br>![C++](https://img.shields.io/badge/c++-%2300599C.svg?
 
 ## 📊 GitHub Activity
 
-- ✅ **137 contributions in the last year**
+- ✅ **150+ contributions in the last year**
 - 📈 Actively building and learning through hands-on projects
 
 ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Nishantyadav00&theme=shadow_blue&hide_border=false&include_all_commits=true&count_private=true&cache_seconds=1800)
