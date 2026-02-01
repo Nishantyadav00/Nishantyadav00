@@ -12,7 +12,7 @@
 
 ## 🌐 Socials:
 CONNECT WITH ME : <br>
-<a href="https://linkedin.com/in/Nishantyadav00" target="_blank"><img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-000?logo=linkedin&logoColor=0A66C2&style=for-the-badge" style="vertical-align:center" /></a> 
+<a href="https://www.linkedin.com/in/nishant-yadav-581b18331/" target="_blank"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-000?logo=linkedin&logoColor=0A66C2&style=for-the-badge" style="vertical-align:center"/></a>
 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nishantyadav954080@gmail.com" target="_blank"><img alt="Email" src="https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white&style=for-the-badge" style="vertical-align:center"/></a>
 
 ## Tech Stack 💻
