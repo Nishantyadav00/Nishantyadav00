@@ -12,7 +12,9 @@
 
 ## 🌐 Socials:
 CONNECT WITH ME : <br>
-LINKEDIN : [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)([https://linkedin.com/in/Nishant Yadav](https://www.linkedin.com/in/nishant-yadav-581b18331/)) <br>EMAIL : [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:nishantyadav954080@gmail.com) 
+<a href="https://linkedin.com/in/Nishantyadav00" target="_blank"><img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-000?logo=linkedin&logoColor=0A66C2&style=for-the-badge" style="vertical-align:center" /></a> 
+<a href="mailto:nishantyadav954080@gmail.com?subject=Hello%20Nishant&body=I%20found%20your%20GitHub%20profile%20and%20would%20like%20to%20connect." target="_blank"><img alt="Email" src="https://img.shields.io/badge/Email-Contact%20Me-D14836?logo=gmail&logoColor=white&style=for-the-badge" style="vertical-align:center"/></a>
+
 
 ## Tech Stack 💻
 #### Languages
