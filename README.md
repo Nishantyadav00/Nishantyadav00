@@ -47,11 +47,9 @@ CONNECT WITH ME : <br>
 - ✅ **150+ contributions in the last year**
 - 📈 Actively building and learning through hands-on projects
 
-![Stats](https://github-readme-stats.vercel.app/api?username=Nishantyadav00&show_icons=true&hide_border=false&theme=jolly&count_private=true&include_all_commits=true)
-![Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Nishantyadav00&show_icons=true&hide_border=false&theme=jolly&count_private=true&include_all_commits=true&layout=compact)
-> Check Commits below, GitHub stats are sometimes inaccurate due to caching.
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Nishantyadav00&theme=shadow_blue&hide_border=false&layout=compact&cache_seconds=1800)
-
+![](https://github-readme-stats.vercel.app/api?username=Nishantyadav00&theme=dark&hide_border=false&include_all_commits=false&count_private=false)<br/>
+![](https://nirzak-streak-stats.vercel.app/?user=Nishantyadav00&theme=dark&hide_border=false)<br/>
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=Nishantyadav00&theme=dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
 ### Thanks for Visiting my GitHub Profile!
 
 ---
