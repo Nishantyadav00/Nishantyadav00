@@ -57,7 +57,7 @@ CONNECT WITH ME : <br>
 <h2 align="center">🚀 GitHub Contribution Space Battle</h2>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Nishantyadav00/Nishantyadav00/output/github-space-shooter.svg" />
+   <img src="https://raw.githubusercontent.com/Nishantyadav00/Nishantyadav00/output/github-contribution-grid-snake-dark.svg" />
 </p>
 
 [![](https://visitcount.itsvg.in/api?id=Nishantyadav00&icon=0&color=0)](https://visitcount.itsvg.in)
