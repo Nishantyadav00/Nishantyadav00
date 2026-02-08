@@ -1,54 +1,28 @@
 import fs from "fs";
 
 const USERNAME = process.env.USERNAME;
-const TOKEN = process.env.GITHUB_TOKEN;
 
 const WIDTH = 1200;
 const HEIGHT = 280;
-
 const BLOCK = 14;
 const GAP = 4;
 
-// 🔹 Fetch real GitHub contribution data
+/**
+ * ✅ PUBLIC CONTRIBUTIONS FETCH
+ * No GraphQL
+ * No auth
+ * No permissions issues
+ */
 async function getContributions() {
-  const query = `
-    query {
-      user(login: "${USERNAME}") {
-        contributionsCollection {
-          contributionCalendar {
-            weeks {
-              contributionDays {
-                contributionCount
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
+  const res = await fetch(
+    `https://github.com/users/${USERNAME}/contributions`
+  );
 
- const res = await fetch("https://api.github.com/graphql", {
-  method: "POST",
-  headers: {
-    Authorization: "bearer " + TOKEN,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ query }),
-});
+  const svgText = await res.text();
 
-
-  const json = await res.json();
-
-  // 🔒 SAFETY CHECK
-  if (!json.data || !json.data.user) {
-    throw new Error(
-      "GitHub API returned null user. Check Actions permissions."
-    );
-  }
-
-  return json.data.user.contributionsCollection
-    .contributionCalendar.weeks
-    .flatMap(w => w.contributionDays.map(d => d.contributionCount));
+  // Extract real contribution counts
+  const matches = [...svgText.matchAll(/data-count="(\d+)"/g)];
+  return matches.map(m => Number(m[1]));
 }
 
 (async () => {
@@ -71,19 +45,20 @@ async function getContributions() {
 
     const hitDuration = hits * 0.4;
 
-    // 🟩 Enemy block
+    // 🟩 Contribution block
     enemies += `
-      <rect x="${x}" y="${y}" width="${BLOCK}" height="${BLOCK}" rx="3"
-        fill="#2ecc71">
+      <rect x="${x}" y="${y}"
+        width="${BLOCK}" height="${BLOCK}"
+        rx="3" fill="#2ecc71">
         <animate attributeName="opacity"
           from="1" to="0"
           begin="${time + hitDuration}s"
-          dur="0.2s"
+          dur="0.25s"
           fill="freeze"/>
       </rect>
     `;
 
-    // 🔫 Bullet travels to this block
+    // 🔫 Bullet moves to THIS block only
     bulletAnimations += `
       <animate attributeName="x2"
         from="126" to="${x}"
@@ -97,9 +72,10 @@ async function getContributions() {
         fill="freeze"/>
     `;
 
-    // 💥 Explosion
+    // 💥 Explosion after destruction
     explosions += `
-      <circle cx="${x + BLOCK / 2}" cy="${y + BLOCK / 2}"
+      <circle cx="${x + BLOCK / 2}"
+        cy="${y + BLOCK / 2}"
         r="2" fill="#ffcc00" opacity="0">
         <animate attributeName="r"
           from="2" to="14"
@@ -156,4 +132,6 @@ async function getContributions() {
 
   fs.mkdirSync("dist", { recursive: true });
   fs.writeFileSync("dist/github-space-shooter.svg", svg);
+
+  console.log("✅ Space shooter SVG generated successfully");
 })();
