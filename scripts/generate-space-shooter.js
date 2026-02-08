@@ -27,14 +27,15 @@ async function getContributions() {
     }
   `;
 
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: \`bearer ${TOKEN}\`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ query }),
-  });
+ const res = await fetch("https://api.github.com/graphql", {
+  method: "POST",
+  headers: {
+    Authorization: "bearer " + TOKEN,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ query }),
+});
+
 
   const json = await res.json();
 
