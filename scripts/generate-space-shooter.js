@@ -1,118 +1,144 @@
 import fs from "fs";
+import fetch from "node-fetch";
+
+const USERNAME = process.env.USERNAME;
+const TOKEN = process.env.GITHUB_TOKEN;
 
 const WIDTH = 1200;
 const HEIGHT = 280;
 
-const WEEKS = 53;
-const DAYS = 7;
 const BLOCK = 14;
 const GAP = 4;
 
-// mock data (0–5 contributions)
-const contributions = Array.from({ length: WEEKS * DAYS }, () =>
-  Math.floor(Math.random() * 6)
-);
+async function getContributions() {
+  const query = `
+  query {
+    user(login: "${USERNAME}") {
+      contributionsCollection {
+        contributionCalendar {
+          weeks {
+            contributionDays {
+              contributionCount
+            }
+          }
+        }
+      }
+    }
+  }`;
 
-let enemies = "";
-let laserAnims = "";
-let explosions = "";
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+  });
 
-let currentTime = 0;
+  const json = await res.json();
+  return json.data.user.contributionsCollection.contributionCalendar.weeks
+    .flatMap(w => w.contributionDays.map(d => d.contributionCount));
+}
 
-contributions.forEach((hits, i) => {
-  if (hits === 0) return;
+(async () => {
+  const data = await getContributions();
 
-  const col = i % WEEKS;
-  const row = Math.floor(i / WEEKS);
+  let enemies = "";
+  let bulletAnims = "";
+  let explosions = "";
 
-  const x = 320 + col * (BLOCK + GAP);
-  const y = 60 + row * (BLOCK + GAP);
+  let time = 0;
 
-  const destroyTime = hits * 0.6;
+  data.forEach((hits, i) => {
+    if (hits === 0) return;
 
-  // ENEMY BLOCK
-  enemies += `
-  <rect x="${x}" y="${y}" width="${BLOCK}" height="${BLOCK}" rx="3"
-        fill="#2ecc71">
-    <animate attributeName="opacity"
-      from="1" to="0"
-      begin="${currentTime + destroyTime}s"
-      dur="0.3s"
-      fill="freeze"/>
-  </rect>
-  `;
+    const col = i % 53;
+    const row = Math.floor(i / 53);
 
-  // LASER TARGETING THIS BLOCK
-  laserAnims += `
-  <animate x2="${x}"
-    y2="${y}"
-    begin="${currentTime}s"
-    dur="0.01s"
-    fill="freeze"/>
-  `;
+    const x = 320 + col * (BLOCK + GAP);
+    const y = 60 + row * (BLOCK + GAP);
 
-  // EXPLOSION
-  explosions += `
-  <circle cx="${x + BLOCK / 2}" cy="${y + BLOCK / 2}"
-          r="2" fill="#ffcc00" opacity="0">
-    <animate attributeName="r"
-      from="2" to="14"
-      begin="${currentTime + destroyTime}s"
-      dur="0.4s"/>
-    <animate attributeName="opacity"
-      from="1" to="0"
-      begin="${currentTime + destroyTime}s"
-      dur="0.4s"/>
-  </circle>
-  `;
+    const hitTime = hits * 0.4;
 
-  currentTime += destroyTime + 0.4;
-});
-
-const svg = `
-<svg width="${WIDTH}" height="${HEIGHT}"
-  viewBox="0 0 ${WIDTH} ${HEIGHT}"
-  xmlns="http://www.w3.org/2000/svg"
-  style="background:#060b18">
-
-  <text x="20" y="28"
-    fill="#00ff99"
-    font-size="16"
-    font-family="monospace">
-    GITHUB CONTRIBUTION SPACE BATTLE
-  </text>
-
-  <!-- SHIP (UNCHANGED) -->
-  <g>
-    <rect x="60" y="160" width="46" height="16" rx="4" fill="#ffffff"/>
-    <polygon points="106,160 126,168 106,176" fill="#ffffff"/>
-    <polygon points="72,156 90,160 72,164" fill="#cccccc"/>
-    <polygon points="72,176 90,176 72,180" fill="#cccccc"/>
-    <rect x="50" y="164" width="10" height="8" fill="#00e5ff">
+    // Enemy block
+    enemies += `
+    <rect x="${x}" y="${y}" width="${BLOCK}" height="${BLOCK}" rx="3"
+          fill="#2ecc71">
       <animate attributeName="opacity"
-        from="0.4" to="1"
-        dur="0.4s"
-        repeatCount="indefinite"/>
-    </rect>
-  </g>
+        from="1" to="0"
+        begin="${time + hitTime}s"
+        dur="0.2s"
+        fill="freeze"/>
+    </rect>`;
 
-  <!-- SINGLE LASER -->
-  <line x1="126" y1="168" x2="126" y2="168"
-        stroke="#00ffd5"
-        stroke-width="2">
-    ${laserAnims}
-  </line>
+    // Bullet travels TO this block
+    bulletAnims += `
+    <animate attributeName="x2"
+      from="126" to="${x}"
+      begin="${time}s"
+      dur="${hitTime}s"
+      fill="freeze"/>
+    <animate attributeName="y2"
+      from="168" to="${y}"
+      begin="${time}s"
+      dur="${hitTime}s"
+      fill="freeze"/>`;
 
-  <!-- ENEMIES -->
-  ${enemies}
+    // Explosion
+    explosions += `
+    <circle cx="${x + BLOCK / 2}" cy="${y + BLOCK / 2}"
+            r="2" fill="#ffcc00" opacity="0">
+      <animate attributeName="r"
+        from="2" to="14"
+        begin="${time + hitTime}s"
+        dur="0.4s"/>
+      <animate attributeName="opacity"
+        from="1" to="0"
+        begin="${time + hitTime}s"
+        dur="0.4s"/>
+    </circle>`;
 
-  <!-- EXPLOSIONS -->
-  ${explosions}
+    time += hitTime + 0.4;
+  });
 
-</svg>
-`;
+  const svg = `
+<svg width="${WIDTH}" height="${HEIGHT}"
+ viewBox="0 0 ${WIDTH} ${HEIGHT}"
+ xmlns="http://www.w3.org/2000/svg"
+ style="background:#060b18">
 
-fs.mkdirSync("dist", { recursive: true });
-fs.writeFileSync("dist/github-space-shooter.svg", svg);
+ <text x="20" y="28"
+  fill="#00ff99"
+  font-size="16"
+  font-family="monospace">
+  GITHUB CONTRIBUTION SPACE BATTLE
+ </text>
 
-console.log("✅ Sequential shooter generated");
+ <!-- SHIP (UNCHANGED) -->
+ <g>
+  <rect x="60" y="160" width="46" height="16" rx="4" fill="#ffffff"/>
+  <polygon points="106,160 126,168 106,176" fill="#ffffff"/>
+  <polygon points="72,156 90,160 72,164" fill="#cccccc"/>
+  <polygon points="72,176 90,176 72,180" fill="#cccccc"/>
+  <rect x="50" y="164" width="10" height="8" fill="#00e5ff">
+   <animate attributeName="opacity"
+    from="0.4" to="1"
+    dur="0.4s"
+    repeatCount="indefinite"/>
+  </rect>
+ </g>
+
+ <!-- SINGLE BULLET -->
+ <line x1="126" y1="168" x2="126" y2="168"
+   stroke="#00ffd5"
+   stroke-width="2">
+   ${bulletAnims}
+ </line>
+
+ ${enemies}
+ ${explosions}
+</svg>`;
+
+  fs.mkdirSync("dist", { recursive: true });
+  fs.writeFileSync("dist/github-space-shooter.svg", svg);
+})();
