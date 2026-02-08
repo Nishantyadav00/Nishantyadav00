@@ -54,6 +54,8 @@ CONNECT WITH ME : <br>
 
 ---
 
+<h2 align="center">🚀 GitHub Contribution Space Battle</h2>
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/Nishantyadav00/Nishantyadav00/output/github-space-shooter.svg" />
 </p>
