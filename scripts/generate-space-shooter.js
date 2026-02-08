@@ -1,5 +1,4 @@
 import fs from "fs";
-import fetch from "node-fetch";
 
 const USERNAME = process.env.USERNAME;
 const TOKEN = process.env.GITHUB_TOKEN;
