@@ -44,7 +44,7 @@ CONNECT WITH ME : <br>
 
 ## 📊 GitHub Activity : 
 
-- ✅ **150+ contributions in the last year**
+- ✅ **250+ contributions in the last year**
 - 📈 Actively building and learning through hands-on projects
 
 ![](https://github-readme-stats.vercel.app/api?username=Nishantyadav00&theme=dark&hide_border=false&include_all_commits=false&count_private=false)<br/>
